@@ -1,0 +1,155 @@
+{% extends 'admin/layouts/app.html' %}
+
+{% block title %}Create New Role{% endblock %}
+
+{% block style %}
+<style>
+    .permissions-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .permissions-header {
+        background-color: #f8f9fa;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    .permissions-body {
+        max-height: 400px;
+        overflow-y: auto;
+        padding: 1.5rem;
+    }
+    .permission-item {
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        border: 1px solid #f0f0f0;
+        margin-bottom: 0.5rem;
+    }
+    .permission-item:hover {
+        background-color: #f8f9fa;
+        transform: translateX(5px);
+        border-color: #e0e0e0;
+    }
+    .select-all-btn {
+        border-radius: 20px;
+        padding: 0.5rem 1.25rem;
+        transition: all 0.2s ease;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content mt-4">
+        <div class="container-fluid">
+            <div class="card card-nova">
+                <div class="card-header-nova">
+                    <h3 class="card-title fw-bold text-dark">
+                        <i class="fas fa-user-tag me-2"></i> Create New Role
+                    </h3>
+                </div>
+
+                {% if current_user.has_permission('create_roles') %}
+                <div class="card-body card-body-nova">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+
+                        <!-- Role Name Field -->
+                        <div class="mb-4">
+                            {{ form.name.label(class="form-label fw-bold text-dark") }}
+                            {{ form.name(class="form-control", placeholder="Enter role name") }}
+                            {% for error in form.name.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+
+
+                        <!-- Permissions Section -->
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <label class="form-label fw-bold text-dark fs-5">Permissions</label>
+                                <button type="button" class="btn btn-outline-primary select-all-btn" id="selectAll">
+                                    <i class="fas fa-check-double me-2"></i> Toggle All
+                                </button>
+                            </div>
+                            
+                            <div class="permissions-card">
+                                <div class="permissions-body">
+                                    <div class="row g-3">
+                                        {% for permission in available_permissions %}
+                                        <div class="col-md-6">
+                                            <label class="permission-item d-flex align-items-center">
+                                                <input type="checkbox" name="permissions" value="{{ permission.id }}" 
+                                                       class="form-check-input me-2">
+                                                {{ permission.name }}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% for error in form.permissions.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-flex justify-content-center mt-5">
+                            <button type="submit" class="btn btn-nova-primary rounded-pill px-5 py-2 fs-5">
+                                <i class="fas fa-save me-2"></i> Save Role
+                            </button>
+                            <a href="{{ url_for('admin.roles') }}" class="btn btn-nova-secondary rounded-pill px-5">
+                                <i class="fas fa-arrow-left me-2"></i> Back to Role List
+                            </a>
+                        </div>
+                    </form>
+                </div>
+                {% else %}
+                <div class="alert alert-warning text-center m-4">
+                    <i class="fas fa-exclamation-triangle me-2"></i> You do not have permission to create roles.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const selectAllButton = document.getElementById('selectAll');
+    const checkboxes = document.querySelectorAll('.permissions-body input[type="checkbox"]');
+    
+    selectAllButton.addEventListener('click', function() {
+        const allChecked = [...checkboxes].every(checkbox => checkbox.checked);
+        
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = !allChecked;
+            checkbox.dispatchEvent(new Event('change')); // Ensure change event fires
+        });
+
+        updateButtonLabel();
+    });
+
+    // Update button label based on selection
+    function updateButtonLabel() {
+        const allChecked = [...checkboxes].every(checkbox => checkbox.checked);
+        selectAllButton.innerHTML = allChecked ? 
+            '<i class="fas fa-times me-2"></i> Deselect All' :
+            '<i class="fas fa-check-double me-2"></i> Select All';
+    }
+
+    // Listen to checkbox changes
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateButtonLabel);
+    });
+
+    // Initialize button state
+    updateButtonLabel();
+});
+</script>
+{% endblock %}

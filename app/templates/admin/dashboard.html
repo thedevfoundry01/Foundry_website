@@ -1,0 +1,252 @@
+{% extends 'admin/layouts/app.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid px-lg-4">
+
+            <!-- Dashboard Header -->
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <div>
+                    <h1 class="h2 mb-0 fw-bold text-gradient-primary">Dashboard Overview</h1>
+                    <p class="lead text-muted mb-0">Platform analytics & insights</p>
+                </div>
+                <div class="d-none d-md-block">
+                    <span class="badge bg-light text-dark fs-6 shadow-sm">
+                        <i class="bi bi-calendar-check me-2"></i>{{ current_time }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row g-4">
+                <!-- Users Card -->
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="card card-hover border-0 shadow-lg overflow-hidden">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="icon-square bg-gradient-primary text-white rounded-3 p-3">
+                                        <i class="fas fa-users fa-2x"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-4">
+                                    <h2 class="mb-1 fw-bold">{{ total_users }}</h2>
+                                    <span class="text-muted">Registered Users</span>
+                                </div>
+                            </div>
+                            {% if current_user.has_permission('read_users') %}
+                            <div class="card-footer-link mt-3 pt-3 border-top border-light">
+                                <a href="{{ url_for('admin.users') }}" class="text-decoration-none d-flex align-items-center justify-content-end">
+                                    <span class="small">Manage Users</span>
+                                    <i class="fas fa-arrow-right ms-2 transition-all"></i>
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Articles Card -->
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="card card-hover border-0 shadow-lg overflow-hidden">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="icon-square bg-gradient-success text-white rounded-3 p-3">
+                                        <i class="fas fa-newspaper fa-2x"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-4">
+                                    <h2 class="mb-1 fw-bold">{{ total_articles }}</h2>
+                                    <span class="text-muted">Published Articles</span>
+                                </div>
+                            </div>
+                            {% if current_user.has_permission('read_articles') %}
+                            <div class="card-footer-link mt-3 pt-3 border-top border-light">
+                                <a href="{{ url_for('admin.articles') }}" class="text-decoration-none d-flex align-items-center justify-content-end">
+                                    <span class="small">Manage Content</span>
+                                    <i class="fas fa-arrow-right ms-2 transition-all"></i>
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comments Card -->
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="card card-hover border-0 shadow-lg overflow-hidden">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="icon-square bg-gradient-warning text-white rounded-3 p-3">
+                                        <i class="fas fa-comments fa-2x"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-4">
+                                    <h2 class="mb-1 fw-bold">{{ total_comments }}</h2>
+                                    <span class="text-muted">Pending Comments</span>
+                                </div>
+                            </div>
+                            {% if current_user.has_permission('read_comments') %}
+                            <div class="card-footer-link mt-3 pt-3 border-top border-light">
+                                <a href="{{ url_for('admin.comments') }}" class="text-decoration-none d-flex align-items-center justify-content-end">
+                                    <span class="small">Review Comments</span>
+                                    <i class="fas fa-arrow-right ms-2 transition-all"></i>
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subscribers Card -->
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="card card-hover border-0 shadow-lg overflow-hidden">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="icon-square bg-gradient-danger text-white rounded-3 p-3">
+                                        <i class="fas fa-envelope fa-2x"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-4">
+                                    <h2 class="mb-1 fw-bold">{{ total_subscribers }}</h2>
+                                    <span class="text-muted">Email Subscribers</span>
+                                </div>
+                            </div>
+                            {% if current_user.has_permission('read_subscribers') %}
+                            <div class="card-footer-link mt-3 pt-3 border-top border-light">
+                                <a href="{{ url_for('admin.subscribers') }}" class="text-decoration-none d-flex align-items-center justify-content-end">
+                                    <span class="small">View List</span>
+                                    <i class="fas fa-arrow-right ms-2 transition-all"></i>
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="row g-4 mt-2">
+                <div class="col-12 col-lg-6">
+                    <div class="card border-0 shadow-lg">
+                        <div class="card-header bg-transparent py-3 border-bottom border-light">
+                            <h5 class="mb-0 fw-bold">User Growth Analytics</h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <canvas id="userGrowthChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-lg-6">
+                    <div class="card border-0 shadow-lg">
+                        <div class="card-header bg-transparent py-3 border-bottom border-light">
+                            <h5 class="mb-0 fw-bold">Content Distribution</h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <canvas id="postChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Chart.js Configuration -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const userGrowth = new Chart(document.getElementById('userGrowthChart'), {
+        type: 'line',
+        data: {
+            labels: {{ user_growth_dates | tojson }},
+            datasets: [{
+                label: 'Active Users',
+                data: {{ user_growth_numbers | tojson }},
+                borderColor: '#6366f1',
+                borderWidth: 2,
+                tension: 0.3,
+                fill: true,
+                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#6366f1',
+                pointBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('postChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Published', 'Drafts', 'Archived'],
+            datasets: [{
+                label: 'Articles',
+                data: {{ article_data | tojson }},
+                backgroundColor: [
+                    'rgba(40, 167, 69, 0.8)',
+                    'rgba(255, 193, 7, 0.8)',
+                    'rgba(220, 53, 69, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(40, 167, 69, 1)',
+                    'rgba(255, 193, 7, 1)',
+                    'rgba(220, 53, 69, 1)'
+                ],
+                borderWidth: 1,
+                borderRadius: 12,
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+});
+</script>
+
+<style>
+.card-hover:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+}
+
+.text-gradient-primary {
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.icon-square {
+    transition: transform 0.3s ease;
+}
+
+.card-hover:hover .icon-square {
+    transform: rotate(15deg);
+}
+
+.bg-gradient-primary { background: linear-gradient(135deg, #4e54c8, #8f94fb) }
+.bg-gradient-success { background: linear-gradient(45deg, #22c55e, #10b981) }
+.bg-gradient-warning { background: linear-gradient(45deg, #f59e0b, #d97706) }
+.bg-gradient-danger { background: linear-gradient(45deg, #ef4444, #dc2626) }
+</style>
+
+{% endblock %}

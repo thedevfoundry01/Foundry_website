@@ -1,0 +1,78 @@
+{% extends 'admin/layouts/app.html' %}
+
+{% block title %}Manage Comment{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content mt-4">
+        <div class="container-fluid">
+            <div class="card card-nova">
+                <div class="card-header-nova">
+                    <h3 class="card-title fw-bold text-dark">
+                        <i class="fas fa-comment-dots me-2"></i> Manage Comment
+                    </h3>
+                </div>
+                
+                <div class="card-body card-body-nova">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="parent_id" value="{{ form.parent_id.data }}">
+
+                        <!-- Select Post Field -->
+                        <div class="mb-3">
+                            {{ form.article_id.label(class="form-label fw-bold text-dark") }}
+                            {{ form.article_id(class="form-select") }}
+                            {% for error in form.article_id.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Name Field -->
+                        <div class="mb-3">
+                            {{ form.name.label(class="form-label fw-bold text-dark") }}
+                            {{ form.name(class="form-control", placeholder="Enter name") }}
+                            {% for error in form.name.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="mb-3">
+                            {{ form.email.label(class="form-label fw-bold text-dark") }}
+                            {{ form.email(class="form-control", placeholder="Enter email") }}
+                            {% for error in form.email.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Comment Content Field -->
+                        <div class="mb-3">
+                            {{ form.content.label(class="form-label fw-bold text-dark") }}
+                            {{ form.content(class="form-control", rows=3, placeholder="Enter comment content") }}
+                            {% for error in form.content.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Approved Checkbox -->
+                        <div class="mb-3 form-check">
+                            {{ form.is_approved(class="form-check-input") }}
+                            {{ form.is_approved.label(class="form-check-label fw-bold text-dark") }}
+                        </div>
+
+                        <!-- Buttons Section (Centered) -->
+                        <div class="d-flex justify-content-center mt-4 gap-3">
+                            <button type="submit" class="btn btn-nova-primary rounded-pill px-5">
+                                <i class="fas fa-save me-2"></i> Save
+                            </button>
+                            <a href="{{ url_for('admin.comments') }}" class="btn btn-nova-secondary rounded-pill px-5">
+                                <i class="fas fa-arrow-left me-2"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

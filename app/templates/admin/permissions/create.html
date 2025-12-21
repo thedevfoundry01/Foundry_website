@@ -1,0 +1,58 @@
+{% extends 'admin/layouts/app.html' %}
+
+{% block title %}Create Permission{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+
+    <section class="content mt-4">
+        <div class="container-fluid">
+            {% if current_user.has_permission('create_permissions') %}
+            <div class="card card-nova">
+                <div class="card-header-nova">
+                    <h3 class="card-title fw-bold text-dark">
+                        <i class="fas fa-key me-2"></i> Create Permission
+                    </h3>
+                </div>
+
+                <div class="card-body card-body-nova">
+                    <form method="post">
+                        {{ form.hidden_tag() }}
+
+                        <!-- Permission Name Field -->
+                        <div class="mb-3">
+                            {{ form.name.label(class="form-label fw-bold text-dark") }}
+                            {{ form.name(class="form-control", placeholder="Enter permission name") }}
+                            {% for error in form.name.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Description Field -->
+                        <div class="mb-3">
+                            {{ form.description.label(class="form-label fw-bold text-dark") }}
+                            {{ form.description(class="form-control", placeholder="Enter description") }}
+                            {% for error in form.description.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-flex justify-content-center mt-4">
+                            <button type="submit" class="btn btn-nova-primary rounded-pill px-5">
+                                <i class="fas fa-save me-2"></i> Create Permission
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-warning text-center mt-4">
+                <i class="fas fa-exclamation-triangle me-2"></i> You do not have permission to create a new permission.
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+</div>
+{% endblock %}

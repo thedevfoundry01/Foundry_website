@@ -1,0 +1,42 @@
+{% extends 'admin/layouts/app.html' %}
+
+{% block title %}Edit Tag{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-8 col-md-10">
+                    <div class="card card-nova">
+                        <!-- Card Header -->
+                        <div class="card-header-nova">
+                            <h3 class="card-title fw-bold text-dark"><i class="fas fa-edit me-2"></i> Edit Tag</h3>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="card-body card-body-nova">
+                            <form method="post">
+                                {{ form.hidden_tag() }}
+                                <!-- Tag Name Input -->
+                                <div class="mb-3">
+                                    {{ form.name.label(class="form-label fw-bold text-dark") }}
+                                    {{ form.name(class="form-control", placeholder="Enter tag name") }}
+                                    {% for error in form.name.errors %}
+                                        <span class="text-danger small">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="d-flex justify-content-center mt-4 gap-3">
+                                    {{ form.submit(class="btn btn-nova-primary rounded-pill px-5") }}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'admin/layouts/app.html' %}
+
+{% block title %}Edit Setting{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content mt-4">
+        <div class="container-fluid">
+            <div class="card card-nova">
+                <div class="card-header-nova">
+                    <h3 class="card-title fw-bold text-dark">
+                        <i class="fas fa-cogs me-2"></i> Edit Setting
+                    </h3>
+                </div>
+
+                <div class="card-body card-body-nova">
+                    <form action="{{ url_for('admin.update_site_setting', id=setting.id) }}" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                        <!-- Key Field -->
+                        <div class="mb-3">
+                            <label for="key" class="form-label fw-bold text-dark">Key</label>
+                            <input type="text" name="key" id="key" class="form-control" value="{{ setting.key }}" required placeholder="Enter setting key">
+                        </div>
+
+                        <!-- Value Field -->
+                        <div class="mb-3">
+                            <label for="value" class="form-label fw-bold text-dark">Value</label>
+                            <textarea name="value" id="value" class="form-control" placeholder="Enter setting value">{{ setting.value }}</textarea>
+                        </div>
+
+                        <!-- Submit Button Section (Centered) -->
+                        <div class="d-flex justify-content-center mt-4 gap-3">
+                            <button type="submit" class="btn btn-nova-primary rounded-pill px-5">
+                                <i class="fas fa-save me-2"></i> Update
+                            </button>
+                            <a href="{{ url_for('admin.site_settings') }}" class="btn btn-nova-secondary rounded-pill px-5">
+                                <i class="fas fa-arrow-left me-2"></i> Back to Settings List
+                            </a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

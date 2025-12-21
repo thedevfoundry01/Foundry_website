@@ -1,0 +1,98 @@
+{% extends 'admin/layouts/app.html' %}
+{% from 'admin/_macros.html' import render_pagination %}
+
+{% block title %}Tags List{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content mt-4">
+        <div class="container-fluid">
+            <!-- Card Container -->
+            <div class="card shadow-sm border-0 rounded-lg overflow-hidden">
+                <!-- Card Header -->
+                <div class="card-header bg-white border-bottom">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="card-title mb-0 text-dark">
+                            <i class="fas fa-tags me-2 text-primary"></i> Tags List
+                        </h3>
+                        {% if current_user.has_permission('create_tags') %}
+                        <a href="{{ url_for('admin.create_tag') }}" class="btn btn-primary btn-sm shadow-sm rounded-pill">
+                            <i class="fas fa-plus me-1"></i> Create New Tag
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if current_user.has_permission('read_tags') %}
+                <!-- Card Body -->
+                <div class="card-body p-4">
+                    {% if tags.items %}
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light text-dark">
+                                <tr>
+                                    <th style="width: 10%;" class="py-3">ID</th>
+                                    <th style="width: 70%;" class="py-3">Name</th>
+                                    <th style="width: 20%; text-align: center;" class="py-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for tag in tags.items %}
+                                <tr class="hover-shadow">
+                                    <td class="align-middle py-3">{{ tag.id }}</td>
+                                    <td class="align-middle py-3">{{ tag.name }}</td>
+                                    <td class="text-center align-middle py-3">
+                                        <div class="d-flex justify-content-center gap-3">
+                                            {% if current_user.has_permission('update_tags') %}
+                                            <a href="{{ url_for('admin.edit_tag', id=tag.id) }}" title="Edit" class="text-dark">
+                                                <i class="bi bi-pencil-square fs-5"></i>
+                                            </a>
+                                            {% endif %}
+                                            {% if current_user.has_permission('delete_tags') %}
+                                            <form action="{{ url_for('admin.delete_tag', id=tag.id) }}" method="post" class="d-inline">
+                                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                <button type="button" title="Delete" onclick="confirmDelete('{{ url_for('admin.delete_tag', id=tag.id) }}')" class="border-0 bg-transparent text-danger">
+                                                    <i class="bi bi-trash fs-5"></i>
+                                                </button>
+                                            </form>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5 text-muted">
+                        <i class="fas fa-info-circle fa-2x"></i>
+                        <p class="mt-3">No tags found. Please create a new tag to get started.</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Card Footer (Pagination) -->
+                <div class="card-footer bg-white text-end border-0 rounded-bottom">
+                    {{ render_pagination(tags, 'admin.tags') }}
+                </div>
+                {% else %}
+                <!-- Permission Denied Message -->
+                <div class="alert alert-danger text-center m-4">
+                    <i class="fas fa-exclamation-triangle me-2"></i> You do not have permission to view the tags list.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    // Enable Bootstrap tooltips
+    document.addEventListener("DOMContentLoaded", function () {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+</script>
+{% endblock %}

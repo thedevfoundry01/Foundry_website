@@ -1,0 +1,83 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}Articles - {{ settings['website_name'] }}{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Explore the latest blog articles on {{ settings['website_name'] }}. Stay updated with trends, insights, and expert advice.">
+{% endblock %}
+
+{% block content %}
+<!-- Articles Page -->
+<div class="min-h-screen bg-gradient-to-r from-blue-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+    <!-- Page Heading -->
+    <div class="text-center">
+      <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+        Articles
+      </h1>
+      <p class="mt-4 text-lg text-gray-600">
+        Explore our latest blog articles and stay updated with the latest trends and insights.
+      </p>
+    </div>
+
+    <!-- Articles Grid -->
+    <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      {% for article in articles.items %}
+        {% include 'components/article_card.html' %}
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-12 text-center">
+      <div class="inline-flex items-center space-x-2">
+        <!-- Previous Button -->
+        {% if articles.has_prev %}
+        <a href="{{ url_for('web.articles', page=articles.prev_num) }}" 
+           class="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-md shadow-md hover:from-blue-700 hover:to-purple-700 transition-all">
+          Previous
+        </a>
+        {% else %}
+        <span class="px-4 py-2 bg-gray-300 text-gray-600 font-semibold rounded-md cursor-not-allowed shadow-md">
+          Previous
+        </span>
+        {% endif %}
+
+        <!-- Page Numbers -->
+        {% for page_num in articles.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+          {% if page_num %}
+            {% if page_num == articles.page %}
+            <!-- Active Page -->
+            <span class="px-4 py-2 bg-purple-600 text-white font-bold rounded-md shadow-md">
+              {{ page_num }}
+            </span>
+            {% else %}
+            <!-- Link to Other Pages -->
+            <a href="{{ url_for('web.articles', page=page_num) }}" 
+               class="px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-md shadow-md hover:bg-gray-200 transition-all">
+              {{ page_num }}
+            </a>
+            {% endif %}
+          {% else %}
+          <!-- Ellipsis for Skipped Pages -->
+          <span class="px-4 py-2 text-gray-500">
+            ...
+          </span>
+          {% endif %}
+        {% endfor %}
+
+        <!-- Next Button -->
+        {% if articles.has_next %}
+        <a href="{{ url_for('web.articles', page=articles.next_num) }}" 
+           class="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-md shadow-md hover:from-blue-700 hover:to-purple-700 transition-all">
+          Next
+        </a>
+        {% else %}
+        <span class="px-4 py-2 bg-gray-300 text-gray-600 font-semibold rounded-md cursor-not-allowed shadow-md">
+          Next
+        </span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

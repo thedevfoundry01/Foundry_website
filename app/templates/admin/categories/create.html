@@ -1,0 +1,49 @@
+{% extends 'admin/layouts/app.html' %}
+
+{% block title %}Create New Category{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content mt-4">
+        <div class="container-fluid">
+            <div class="card card-nova">
+                <div class="card-header-nova">
+                    <h3 class="card-title fw-bold text-dark">
+                        <i class="fas fa-tag me-2"></i> Create New Category
+                    </h3>
+                </div>
+
+                <div class="card-body card-body-nova">
+                    <form method="post">
+                        {{ form.hidden_tag() }}
+
+                        <!-- Name Field -->
+                        <div class="mb-3">
+                            {{ form.name.label(class="form-label fw-bold text-dark") }}
+                            {{ form.name(class="form-control", placeholder="Enter category name") }}
+                            {% for error in form.name.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Slug Field -->
+                        <div class="mb-3">
+                            {{ form.slug.label(class="form-label fw-bold text-dark") }}
+                            {{ form.slug(class="form-control", placeholder="Enter slug") }}
+                            {% for error in form.slug.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Submit Button Section -->
+                        <div class="d-flex justify-content-center mt-4 gap-3">
+                            {{ form.submit(class="btn btn-nova-primary rounded-pill px-5") }}
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

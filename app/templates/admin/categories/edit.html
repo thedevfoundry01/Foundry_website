@@ -1,0 +1,95 @@
+{% extends 'admin/layouts/app.html' %}
+
+{% block title %}Edit Category{% endblock %}
+
+{% block style %}
+<!-- Select2 and Summernote CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="{{ url_for('static', filename='admin/dist/summernote/summernote-bs5.css') }}" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/theme/monokai.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content mt-4">
+        <div class="container-fluid">
+            <div class="card card-nova">
+                <div class="card-header-nova">
+                    <h3 class="card-title fw-bold text-dark">
+                        <i class="fas fa-edit me-2"></i> Edit Category
+                    </h3>
+                </div>
+
+                <div class="card-body card-body-nova">
+                    <form method="post">
+                        {{ form.hidden_tag() }}
+                        
+                        <!-- Name Field -->
+                        <div class="mb-3">
+                            {{ form.name.label(class="form-label fw-bold text-dark") }}
+                            {{ form.name(class="form-control", placeholder="Enter category name") }}
+                            {% for error in form.name.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        
+                        <!-- Slug Field -->
+                        <div class="mb-3">
+                            {{ form.slug.label(class="form-label fw-bold text-dark") }}
+                            {{ form.slug(class="form-control", placeholder="Enter category slug") }}
+                            {% for error in form.slug.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Description Field (Summernote) -->
+                        <div class="mb-3">
+                            {{ form.description.label(class="form-label fw-bold text-dark") }}
+                            {{ form.description(class="form-control", id="summernote") }}
+                            {% for error in form.description.errors %}
+                                <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Submit Button Section -->
+                        <div class="d-flex justify-content-center mt-4 gap-3">
+                            {{ form.submit(class="btn btn-nova-primary rounded-pill px-5") }}
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{ url_for('static', filename='admin/dist/summernote/summernote-bs5.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('#categories, #tags').select2({
+            placeholder: "Select options",
+            allowClear: true
+        });
+
+        $('#summernote').summernote({
+            height: 500,
+            codemirror: {
+                theme: 'monokai',
+                mode: 'htmlmixed'
+            }
+        });
+
+        $('#generateSlug').click(function() {
+            const title = $('#title').val();
+            if (title) {
+                $('#slug').val(title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, ''));
+            }
+        });
+    });
+</script>
+{% endblock %}

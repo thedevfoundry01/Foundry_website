@@ -1,0 +1,210 @@
+{% extends 'admin/layouts/app.html' %}
+
+{% block title %}Create New Article{% endblock %}
+
+{% block style %}
+<!-- Select2 and Summernote CSS -->
+
+<link href="{{ url_for('static', filename='admin/dist/summernote/summernote-bs5.css') }}" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/theme/monokai.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/dist/css/select2-bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/dist/css/select2.min.css') }}">
+<!-- Custom Select2 Styling -->
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/dist/css/custom-select2.css') }}">
+
+{% endblock %}
+
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content mt-4">
+        <div class="container-fluid">
+            <div class="card card-nova">
+                <div class="card-header-nova py-3 px-4 bg-light border-bottom rounded-top">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- Title Section -->
+                        <h3 class="card-title fw-bold text-dark m-0 d-flex align-items-center">
+                            <i class="fas fa-plus me-2 text-primary"></i> 
+                            Create New Article
+                        </h3>
+                
+                        <!-- Preview Link -->
+                        <a href="{{ url_for('web.article_preview', slug=article.slug) }}" 
+                           class="btn bg-gradient-primary text-white btn-sm px-4" 
+                           target="_blank" 
+                           aria-label="Preview the article in a new tab">
+                            <i class="fas fa-eye me-1"></i> Preview
+                        </a>
+                    </div>
+                </div>
+                
+
+                <div class="card-body card-body-nova">
+                    <form method="POST" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+
+                        <!-- Title -->
+                        <div class="mb-3">
+                            {{ form.title.label(class="form-label fw-bold text-dark") }}
+                            {{ form.title(class="form-control", placeholder="Enter the article title") }}
+                            <small id="titleHelp" class="form-text text-muted">This is the main title of your article.</small>
+                            {% for error in form.title.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Slug -->
+                        <div class="mb-3">
+                            {{ form.slug.label(class="form-label fw-bold text-dark w-100") }}
+                            <div class="row">
+                                <div class="col-8">
+                                    {{ form.slug(class="form-control me-2", placeholder="Enter the slug") }}
+                                </div>
+                                <div class="col-4">
+
+                                    <button type="button" id="generateSlug" class="btn btn-sm btn-nova-secondary">
+                                        Auto-Generate
+                                    </button>
+                                </div>
+                            </div>
+                            {% for error in form.slug.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        
+
+                        <!-- Content -->
+                        <div class="mb-3">
+                            {{ form.content.label(class="form-label fw-bold text-dark") }}
+                            {{ form.content(class="form-control", id="summernote") }}
+                            {% for error in form.content.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Categories -->
+                        <div class="mb-3">
+                            {{ form.categories.label(class="form-label fw-bold text-dark") }}
+                            {{ form.categories(class="form-control select2", id="categories", multiple="multiple") }}
+                            {% for error in form.categories.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="mb-3">
+                            {{ form.tags.label(class="form-label fw-bold text-dark") }}
+                            {{ form.tags(class="form-control select2", id="tags", multiple="multiple") }}
+                            {% for error in form.tags.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Publish Checkbox -->
+                        <div class="mb-3 form-check">
+                            {{ form.is_published(class="form-check-input") }}
+                            {{ form.is_published.label(class="form-check-label fw-bold text-dark") }}
+                        </div>
+
+                        <!-- Featured Checkbox -->
+                        <div class="mb-3 form-check">
+                            {{ form.is_featured(class="form-check-input") }}
+                            {{ form.is_featured.label(class="form-check-label fw-bold text-dark") }}
+                        </div>
+
+                        <!-- Featured Image -->
+                        <div class="mb-3">
+                            {{ form.featured_image.label(class="form-label fw-bold text-dark") }}
+                            {{ form.featured_image(class="form-control") }}
+                            {% for error in form.featured_image.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Image Preview -->
+                        {% if article.featured_image %}
+                        <div class="mb-3">
+                            <h4>Image Preview:</h4>
+                            <img src="{{ url_for('static', filename='uploads/articles/' + article.featured_image)}}" alt="Featured Image" class="img-thumbnail" width="200">
+                        </div>
+                        {% endif %}
+
+                        <!-- Buttons Section (Centered) -->
+                        <div class="d-flex justify-content-center mt-4 gap-3">
+                            <button type="submit" class="btn btn-nova-primary rounded-pill px-5">
+                                <i class="fas fa-save me-2"></i> Save Article
+                            </button>
+                            <a href="{{ url_for('admin.articles') }}" class="btn btn-nova-secondary rounded-pill px-5">
+                                <i class="fas fa-arrow-left me-2"></i> Back to Articles List
+                            </a>
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{ url_for('static', filename='admin/dist/summernote/summernote-bs5.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('#categories, #tags').select2({
+            placeholder: "Select options",
+            allowClear: true
+        });
+
+        $('#generateSlug').click(function() {
+            const title = $('#title').val();
+            if (title) {
+                $('#slug').val(title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, ''));
+            }
+        });
+
+
+
+        $('#summernote').summernote({
+            height: 500,
+            codemirror: {
+                theme: 'monokai',
+                mode: 'htmlmixed'
+            },
+            callbacks: {
+                onImageUpload: function(files) {
+                    var formData = new FormData();
+                    formData.append('file', files[0]);
+        
+                    // Retrieve CSRF token from the form or meta tag
+                    var csrfToken = $('input[name="csrf_token"]').val(); // If using Flask-WTF hidden_tag()
+                    // OR if using a meta tag
+                    // var csrfToken = $('meta[name="csrf-token"]').attr('content');
+        
+                    $.ajax({
+                        url: '{{ url_for("admin.upload_image") }}',  // The Flask route for image upload
+                        method: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        headers: {
+                            'X-CSRFToken': csrfToken  // Add CSRF token to headers
+                        },
+                        success: function(response) {
+                            var imageUrl = response.url;
+                            $('#summernote').summernote('insertImage', imageUrl);
+                        },
+                        error: function() {
+                            alert("Image upload failed.");
+                        }
+                    });
+                }
+            }
+        });
+        
+    });
+</script>
+{% endblock %}

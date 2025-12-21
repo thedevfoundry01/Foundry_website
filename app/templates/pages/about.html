@@ -1,0 +1,125 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}About Us - {{ settings['website_name'] }}{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Learn more about {{ settings['website_name'] }} and our mission to empower businesses through innovative solutions and high-quality content.">
+{% endblock %}
+
+{% block content %}
+<!-- About Us Page -->
+<div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <!-- Hero Section -->
+    <div class="max-w-7xl mx-auto text-center">
+        <h1 class="text-5xl font-extrabold text-gray-900 mb-6">
+            About Us
+        </h1>
+       <p class="text-xl text-gray-600 mb-8">
+          {{ settings['website_name'] }} is where modern developers are shaped through practice, collaboration, and real engineering work.
+          We believe great software is built by developers who understand the full journey — from ideas and architecture to code,
+          infrastructure, and deployment.
+       </p>
+
+       <p class="text-xl text-gray-600 mb-8">
+         That’s why we focus on hands-on learning, real-world tools, and community-driven growth rather than theory alone.
+       </p>
+
+        <p class="text-xl text-gray-600 mb-8">
+          Whether you’re building your first project, improving an existing system, or learning how modern DevOps workflows
+          actually work in the real world, {{ settings['website_name'] }} is a place to learn by doing — and to do it together.
+        </p>
+
+    </div>
+
+    <!-- Team Section -->
+    <div class="max-w-7xl mx-auto mt-12">
+        <h2 class="text-3xl font-bold text-gray-900 text-center mb-8">
+            Meet Our Team
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Team Member 1 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <img src="{{ url_for('static', filename='img/about/john.jpg')}}" alt="John Doe - CEO & Founder at {{ settings['website_name'] }}" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold text-gray-900">John Doe</h3>
+                    <p class="text-gray-600 mt-2">CEO & Founder</p>
+                    <p class="text-gray-600 mt-4">
+                        John is a visionary leader with over 10 years of experience in the tech industry. He founded {{ settings['website_name'] }} with a mission to empower businesses through innovative solutions.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Team Member 2 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <img src="{{ url_for('static', filename='img/about/jane.jpg')}}" alt="Jane Smith - Creative Director at {{ settings['website_name'] }}" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold text-gray-900">Jane Smith</h3>
+                    <p class="text-gray-600 mt-2">Creative Director</p>
+                    <p class="text-gray-600 mt-4">
+                        Jane is a creative genius who brings ideas to life with her innovative designs. She ensures that every project at {{ settings['website_name'] }} is visually stunning and user-friendly.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Team Member 3 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <img src="{{ url_for('static', filename='img/about/michel.jpg')}}" alt="Michael Brown - Lead Developer at {{ settings['website_name'] }}" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold text-gray-900">Michael Brown</h3>
+                    <p class="text-gray-600 mt-2">Lead Developer</p>
+                    <p class="text-gray-600 mt-4">
+                        Michael is a coding wizard who builds robust and scalable solutions. He ensures that {{ settings['website_name'] }} delivers high-performance applications to our users.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mission Section -->
+    <div class="max-w-7xl mx-auto mt-16">
+        <h2 class="text-3xl font-bold text-gray-900 text-center mb-8">
+            Our Mission
+        </h2>
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <p class="text-gray-600 text-lg leading-relaxed">
+                At {{ settings['website_name'] }}, our mission is to empower individuals and businesses by providing high-quality content and innovative solutions. We believe in the power of collaboration, creativity, and technology to drive positive change in the world. Whether you're a startup or an established enterprise, we're here to help you succeed.
+            </p>
+        </div>
+    </div>
+
+    <!-- Values Section -->
+    <div class="max-w-7xl mx-auto mt-16">
+        <h2 class="text-3xl font-bold text-gray-900 text-center mb-8">
+            Our Values
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Value 1 -->
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="text-4xl text-blue-600 mb-4">🌟</div>
+                <h3 class="text-xl font-bold text-gray-900">Innovation</h3>
+                <p class="text-gray-600 mt-2">
+                    We constantly push boundaries to create cutting-edge solutions that set us apart in the industry.
+                </p>
+            </div>
+
+            <!-- Value 2 -->
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="text-4xl text-purple-600 mb-4">🤝</div>
+                <h3 class="text-xl font-bold text-gray-900">Collaboration</h3>
+                <p class="text-gray-600 mt-2">
+                    We believe in the power of teamwork and shared success. Together, we achieve more.
+                </p>
+            </div>
+
+            <!-- Value 3 -->
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="text-4xl text-green-600 mb-4">💡</div>
+                <h3 class="text-xl font-bold text-gray-900">Creativity</h3>
+                <p class="text-gray-600 mt-2">
+                    We approach every challenge with a fresh and creative perspective to deliver unique solutions.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,150 @@
+{% extends 'admin/layouts/app.html' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content mt-4">
+        <div class="container-fluid">
+            <!-- Edit Profile Card -->
+            <div class="card card-nova">
+                <div class="card-header-nova">
+                    <h3 class="card-title fw-bold text-dark">
+                        <i class="fas fa-edit me-2"></i> Edit Profile
+                    </h3>
+                </div>
+                <div class="card-body card-body-nova">
+                    <form method="post" action="{{ url_for('admin.profile') }}" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                        
+                        <div class="row mb-4">
+                            <!-- Profile Image Section -->
+                            {% if user.profile_image %}
+                            <div class="col-sm-6 text-center">
+                                <h5 class="font-weight-bold">Current Profile Image:</h5>
+                                <img src="{{ url_for('static', filename='uploads/' + user.profile_image) }}" alt="Profile Image" class="img-thumbnail rounded-circle shadow-sm" width="200">
+                            </div>
+                            {% endif %}
+                            
+                            <!-- Form Fields Section -->
+                            <div class="col-sm-6">
+                                <!-- Name -->
+                                <div class="mb-3">
+                                    <label for="name" class="form-label fw-bold text-dark">Name</label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        class="form-control"
+                                        value="{{ user.name }}"
+                                        placeholder="Enter full name"
+                                        required
+                                    >
+                                </div>
+                    
+                                <!-- Email -->
+                                <div class="mb-3">
+                                    <label for="email" class="form-label fw-bold text-dark">Email</label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        class="form-control"
+                                        value="{{ user.email }}"
+                                        placeholder="Enter email address"
+                                        required
+                                    >
+                                </div>
+                    
+                                <!-- Profile Image Upload -->
+                                <div class="mb-3">
+                                    <label for="profile_image" class="form-label fw-bold text-dark">Profile Image</label>
+                                    <input
+                                        type="file"
+                                        id="profile_image"
+                                        name="profile_image"
+                                        class="form-control-file"
+                                    >
+                                </div>
+                    
+                                <!-- Buttons -->
+                                <div class="d-flex justify-content-center gap-3 mt-4">
+                                    <button type="submit" class="btn btn-nova-primary rounded-pill px-5">
+                                        <i class="fas fa-save me-2"></i> Update Profile
+                                    </button>
+                                    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-nova-secondary rounded-pill px-5">
+                                        <i class="fas fa-arrow-left me-2"></i> Back to Dashboard
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+
+            <!-- Update Password Card -->
+            <div class="card card-nova mt-4">
+                <div class="card-header-nova">
+                    <h3 class="card-title fw-bold text-dark">
+                        <i class="fas fa-key me-2"></i> Update Password
+                    </h3>
+                </div>
+                <div class="card-body card-body-nova">
+                    <form method="post" action="{{ url_for('admin.update_password') }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+                        <!-- Current Password -->
+                        <div class="mb-3">
+                            <label for="current_password" class="form-label fw-bold text-dark">Current Password</label>
+                            <input
+                                type="password"
+                                id="current_password"
+                                name="current_password"
+                                class="form-control"
+                                placeholder="Enter current password"
+                                required
+                            >
+                        </div>
+
+                        <!-- New Password -->
+                        <div class="mb-3">
+                            <label for="new_password" class="form-label fw-bold text-dark">New Password</label>
+                            <input
+                                type="password"
+                                id="new_password"
+                                name="new_password"
+                                class="form-control"
+                                placeholder="Enter new password"
+                                required
+                            >
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="mb-3">
+                            <label for="confirm_password" class="form-label fw-bold text-dark">Confirm Password</label>
+                            <input
+                                type="password"
+                                id="confirm_password"
+                                name="confirm_password"
+                                class="form-control"
+                                placeholder="Confirm new password"
+                                required
+                            >
+                        </div>
+
+                        <div class="d-flex justify-content-center gap-3 mt-4">
+                            <button
+                                type="submit"
+                                class="btn btn-nova-primary rounded-pill px-5"
+                            >
+                                <i class="fas fa-key me-2"></i> Update Password
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

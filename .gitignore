@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.*
+
+# Flask
+instance/
+*.log
+
+# Virtual Environment
+venv/
+.env/
+.venv/
+
+# Node
+node_modules/
+dist/
+
+# Testing
+.pytest_cache/
+
+# OS
+.DS_Store
+
+# Databases (ignore real data)
+*.sqlite3
+*.db
+
+app/config.py

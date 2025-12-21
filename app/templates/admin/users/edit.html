@@ -1,0 +1,94 @@
+{% extends 'admin/layouts/app.html' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block style %}
+<!-- Include Select2 CSS (AdminLTE already includes it, but ensure it's loaded) -->
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/dist/css/select2-bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/dist/css/select2.min.css') }}">
+<!-- Custom Select2 Styling -->
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/dist/css/custom-select2.css') }}">
+
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content mt-4">
+        <div class="container-fluid">
+            <div class="card card-nova">
+                <div class="card-header-nova">
+                    <h3 class="card-title fw-bold text-dark">
+                        <i class="fas fa-edit me-2"></i> Edit User Form
+                    </h3>
+                </div>
+
+                <div class="card-body card-body-nova">
+                    <form method="POST" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+
+                        <!-- Name Field -->
+                        <div class="mb-3">
+                            {{ form.name.label(class="form-label fw-bold text-dark") }}
+                            {{ form.name(class="form-control", placeholder="Enter full name") }}
+                            {% for error in form.name.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="mb-3">
+                            {{ form.email.label(class="form-label fw-bold text-dark") }}
+                            {{ form.email(class="form-control", placeholder="Enter email address") }}
+                            {% for error in form.email.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        
+
+                        <!-- Status Field -->
+                        <div class="mb-3">
+                            {{ form.status.label(class="form-label fw-bold text-dark") }}
+                            {{ form.status(class="form-select") }}
+                        </div>
+
+                        <!-- Roles Field -->
+                        <div class="mb-3">
+                            {{ form.roles.label(class="form-label fw-bold text-dark") }}
+                            {{ form.roles(class="form-select select2", multiple=True) }}
+                            {% for error in form.roles.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+
+                        <!-- Buttons Section (Centered) -->
+                        <div class="d-flex justify-content-center mt-4 gap-3">
+                            <button type="submit" class="btn btn-nova-primary rounded-pill px-5">
+                                <i class="fas fa-save me-2"></i> {{ form.submit.label }}
+                            </button>
+                            <a href="{{ url_for('admin.users') }}" class="btn btn-nova-secondary rounded-pill px-5">
+                                <i class="fas fa-arrow-left me-2"></i> Back to User List
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block script %}
+<!-- Include Select2 JS -->
+<script src="{{ url_for('static', filename='admin/dist/js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='admin/dist/js/select2.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: "Select options",
+            allowClear: true
+        });
+    });
+</script>
+{% endblock %}
