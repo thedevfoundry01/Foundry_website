@@ -9,6 +9,8 @@ def create_app():
     """Application Factory for initializing the Flask app."""
     app = Flask(__name__)
     app.config.from_object(Config)
+    app.config['ENV'] = 'development'
+    app.config['DEBUG'] = True
 
     # Initialize extensions
     initialize_extensions(app)

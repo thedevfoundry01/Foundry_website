@@ -24,15 +24,15 @@ def contact():
 def category_articles(slug):
     return ArticleController.category_articles(slug)
 
-@web_bp.route('/articles')
+@web_bp.route('/Projects')
 def articles():
     return ArticleController.articles()
 
-@web_bp.route('/articles/<slug>')
+@web_bp.route('/Projects/<slug>')
 def article_detail(slug):
     return ArticleController.article_detail(slug)
 
-@web_bp.route('/articles/<slug>/comment',  methods=['POST'])
+@web_bp.route('/Projects/<slug>/comment',  methods=['POST'])
 def add_comment(slug):
     return ArticleController.add_comment(slug)
 
@@ -42,7 +42,7 @@ def add_reply(comment_id):
     return ArticleController.add_reply(comment_id)
 
 
-@web_bp.route('/articles/preview/<slug>')
+@web_bp.route('/Projects/preview/<slug>')
 def article_preview(slug):
     return ArticleController.article_preview(slug)
 

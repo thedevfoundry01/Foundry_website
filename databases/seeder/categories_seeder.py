@@ -7,7 +7,15 @@ faker = Faker()
 
 def seed_categories():
     """Seed the database with predefined categories."""
-    categories = ["Technology", "Science", "Health", "Education", "Travel"]
+    categories = [
+        "DevOps & Platform Engineering",
+        "Cloud & AWS",
+        "Software Engineering & SDLC",
+        "Automation & CI/CD",
+        "Infrastructure & Linux",
+        "Hardware, Electrical & Electronics",
+        "Science & Engineering Projects"
+    ]
     for category_name in categories:
         # Generate a slug based on the category name
         slug = slugify.slugify(category_name)

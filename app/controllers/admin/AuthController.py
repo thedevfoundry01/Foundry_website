@@ -8,6 +8,7 @@ from app.models.comment import Comment
 from app.models.subscriber import Subscriber
 from datetime import datetime, timedelta
 
+
 class AuthController:
     @staticmethod
     def login():
@@ -34,13 +35,18 @@ class AuthController:
         total_comments = Comment.query.filter_by(is_approved=False).count()
         total_subscribers = Subscriber.query.count()
 
-        # Generate user growth data (last 7 days)
-        user_growth_dates = [(datetime.today() - timedelta(days=i)).strftime('%b %d') for i in range(7)][::-1]
-        user_growth_numbers = [User.query.filter(User.created_at >= datetime.today() - timedelta(days=i)).count() for i in range(7)][::-1]
 
-        # Post statistics (published, drafts, pending)
+        user_growth_dates = [(datetime.today() - timedelta(days=i)).strftime('%b %d') for i in range(7)][::-1]
+        user_growth_numbers = [
+        User.query.filter(User.created_at >= datetime.today() - timedelta(days=i)).count()
+        for i in range(7)
+        ][::-1]
+
+
         published_articles = Article.query.filter_by(is_published=True).count()
         draft_articles = Article.query.filter_by(is_published=False).count()
+
+
         article_data = [published_articles, draft_articles]
 
         return render_template(
@@ -51,7 +57,8 @@ class AuthController:
             total_subscribers=total_subscribers,
             user_growth_dates=user_growth_dates,
             user_growth_numbers=user_growth_numbers,
-            article_data=article_data
+            article_data=article_data,
+            current_time=datetime.now().strftime("%d %b %Y, %I:%M %p")
         )
 
     @staticmethod

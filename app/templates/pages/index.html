@@ -2,32 +2,38 @@
 {% block title %}Home Page{% endblock %}
 {% block content %}
 <!-- Hero Section -->
-<div class="relative bg-cover bg-center h-screen" style="background-image: url('/static/img/hero-banner.jpg');">
-    <!-- Overlay to ensure text readability -->
-    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
-    
-    <div class="container mx-auto px-6 lg:px-12 text-center relative z-10 h-full flex flex-col justify-center items-center">
+<!-- Hero Section -->
+<div class="relative w-full">
+    <!-- Hero Image -->
+    <img src="/static/img/hero-banner.jpg" alt="Hero Banner"
+        class="w-full h-auto object-contain lg:h-[80vh] lg:object-cover">
+
+    <!-- Overlay -->
+    <div
+        class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-center px-6 lg:px-12">
         <!-- Main Heading -->
-        <h1 class="text-5xl lg:text-7xl font-extrabold text-white mb-6 drop-shadow-lg">
+        <h1 class="text-4xl lg:text-7xl font-extrabold text-white mb-4 lg:mb-6 drop-shadow-lg">
             TheDevFoundry
         </h1>
-        
+
         <!-- Subheading -->
-        <p class="text-lg lg:text-2xl text-white opacity-90 mb-10 max-w-2xl">
-            Where curiosity turns into real skills, ideas turn into working software, and developers grow by building together.
+        <p class="text-base lg:text-2xl text-white opacity-90 mb-6 lg:mb-10 max-w-2xl">
+            Where curiosity turns into real skills, ideas turn into working software, and developers grow by building
+            together.
         </p>
-        
+
         <!-- Call-to-Action Button -->
-        <a href="#featured-articles" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold text-lg py-4 px-10 rounded-full shadow-xl hover:scale-105 transform transition duration-300 hover:shadow-2xl">
-            Explore articles
+        <a href="#Our Services"
+            class="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold text-base lg:text-lg py-3 px-8 lg:py-4 lg:px-10 rounded-full shadow-xl hover:scale-105 transform transition duration-300 hover:shadow-2xl">
+            Explore Services
         </a>
     </div>
 </div>
 
 <!-- Featured articles Section -->
-<section id="featured-articles" class="container mx-auto px-6 lg:px-12 py-20">
-    <h2 class="text-4xl lg:text-5xl font-bold text-gray-800 text-center mb-14">
-        Featured articles
+<section id="Our Services" class="container mx-auto px-6 lg:px-12 py-20">
+    <h2 class="text-4xl lg:text-5xl font-bold text-gray-800 dark:text-white text-center mb-14">
+        Our Services
     </h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
         {% for article in featured_articles %}
@@ -37,30 +43,30 @@
 </section>
 
 <!-- Highlights Section -->
-<section class="bg-gradient-to-r from-indigo-50 to-white py-20">
+<section class="bg-gradient-to-r from-indigo-50 to-white dark:from-gray-800 dark:to-gray-900 py-20">
     <div class="container mx-auto px-6 lg:px-12 text-center">
-        <h2 class="text-4xl lg:text-5xl font-bold text-gray-800 mb-12">
+        <h2 class="text-4xl lg:text-5xl font-bold text-gray-800 dark:text-white mb-12">
             Why Choose Us
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
             <div class="flex flex-col items-center">
-                <i class="fas fa-lightbulb text-indigo-600 text-6xl mb-4"></i>
-                <h3 class="text-2xl font-semibold text-gray-700 mb-2">Innovative Insights</h3>
-                <p class="text-gray-500 text-sm">
+                <i class="fas fa-lightbulb text-indigo-600 dark:text-indigo-400 text-6xl mb-4"></i>
+                <h3 class="text-2xl font-semibold text-gray-700 dark:text-gray-200 mb-2">Innovative Insights</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
                     Dive into expertly curated content to inspire creativity and innovation.
                 </p>
             </div>
             <div class="flex flex-col items-center">
-                <i class="fas fa-users text-purple-600 text-6xl mb-4"></i>
-                <h3 class="text-2xl font-semibold text-gray-700 mb-2">Engaging Community</h3>
-                <p class="text-gray-500 text-sm">
+                <i class="fas fa-users text-purple-600 dark:text-purple-400 text-6xl mb-4"></i>
+                <h3 class="text-2xl font-semibold text-gray-700 dark:text-gray-200 mb-2">Engaging Community</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
                     Join a network of like-minded enthusiasts and grow together.
                 </p>
             </div>
             <div class="flex flex-col items-center">
-                <i class="fas fa-award text-blue-600 text-6xl mb-4"></i>
-                <h3 class="text-2xl font-semibold text-gray-700 mb-2">Quality Content</h3>
-                <p class="text-gray-500 text-sm">
+                <i class="fas fa-award text-blue-600 dark:text-blue-400 text-6xl mb-4"></i>
+                <h3 class="text-2xl font-semibold text-gray-700 dark:text-gray-200 mb-2">Quality Content</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
                     Only the best content to keep you ahead in the game.
                 </p>
             </div>
@@ -68,10 +74,10 @@
     </div>
 </section>
 
-<!-- Latest articles Section -->
+<!-- We Build Section -->
 <section class="container mx-auto px-6 lg:px-12 py-20">
-    <h2 class="text-4xl lg:text-5xl font-bold text-gray-800 text-center mb-14">
-        Latest articles
+    <h2 class="text-4xl lg:text-5xl font-bold text-gray-800 dark:text-white text-center mb-14">
+        What We Build & Enable
     </h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
         {% for article in latest_articles %}
@@ -93,14 +99,9 @@
         <form action="{{ url_for('web.subscribe') }}" method="POST" class="max-w-2xl mx-auto">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <div class="flex flex-col md:flex-row gap-4">
-                <input 
-                    type="email" 
-                    name="email" 
-                    placeholder="Enter your email" 
-                    class="flex-1 px-5 py-4 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900"
-                />
-                <button 
-                    type="submit" 
+                <input type="email" name="email" placeholder="Enter your email"
+                    class="flex-1 px-5 py-4 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900" />
+                <button type="submit"
                     class="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold px-8 py-4 rounded-lg hover:scale-105 transform transition duration-300">
                     Subscribe
                 </button>
